@@ -9,22 +9,23 @@ import UIKit
 
 class ToDoListViewController: UIViewController {
     
-
+    
     
     @IBOutlet weak var toDoTableView: UITableView!
     
-    var toDoCategory: [Item] = [
-        Item(name: "Jane", done: true),
-        Item(name: "John", done: false),
-        Item(name: "Cena", done: true)]
-
+    var toDoCategory = [Item]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
+        
+        let newItem = Item()
+        newItem.name = "Find Mike"
+        
     }
-
-
+    
+    
 }
 
 // MARK: - TableView DataSource methods
@@ -38,31 +39,39 @@ extension ToDoListViewController: UITableViewDataSource {
     // put content in the cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath)
-                cell.textLabel?.text = toDoCategory[indexPath.row].name
-//                cell.contentView.backgroundColor = UIColor(named: toDoCategory[indexPath.row].color)
-                return cell
+        
+        // create a constant item that refers to a cell
+        let item = toDoCategory[indexPath.row]
+        
+        cell.textLabel?.text = item.name
+        
+        // Ternary operator
+        // value = condition ? valueIfTrue : valueIfFalse
+        // Set the cell’s accessory type to .checkmark or .none depending if the item.done is true
+        cell.accessoryType = item.done == true ? .checkmark : .none
+
+        return cell
     }
     
 }
-    // MARK: - TableView Delegate protocols
+// MARK: - TableView Delegate protocols
 
 extension ToDoListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(toDoCategory[indexPath.row].name)
-
-        // checkmark appears and dissappears when a cell was clicked on
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
-        // deselect a cell when it was clocked on
-        tableView.deselectRow(at: indexPath, animated: false)
+        
+        // check if the Item's property "done" is false and if so set it to true, otherwise set it to false
+        toDoCategory[indexPath.row].done = !toDoCategory[indexPath.row].done
+        
+        self.toDoTableView.reloadData()
+        
+        // deselect a cell when it was clicked on
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
-   
+    
     // MARK: - add new items
     
     @IBAction func plusButtonPressed(_ sender: Any) {
@@ -72,8 +81,10 @@ extension ToDoListViewController: UITableViewDelegate {
         let alert = UIAlertController(title: "Add new Item", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             // what will happen once the user clicks the Add Item button on our UIAlert
-            //append the text from teh textfield to the array of category
-            self.toDoCategory.append(Item(name: textField.text!, done: false))
+            //append the text from teh textfield to the array of Items
+            let newItemFromTheTextField = Item()
+            newItemFromTheTextField.name = textField.text!
+            self.toDoCategory.append(newItemFromTheTextField)
             // refresh the TableView
             self.toDoTableView.reloadData()
         }
