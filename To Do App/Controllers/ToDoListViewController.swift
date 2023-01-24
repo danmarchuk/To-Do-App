@@ -9,8 +9,6 @@ import UIKit
 
 class ToDoListViewController: UIViewController {
     
-    
-    
     @IBOutlet weak var toDoTableView: UITableView!
     
     var toDoCategory = [Item]()
