@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Item {
-    let name: String
-    let done: Bool
+class Item {
+    var name: String = ""
+    var done: Bool = false
 }
