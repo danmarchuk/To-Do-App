@@ -19,7 +19,7 @@ class ToDoListViewController: UIViewController {
         toDoTableView.dataSource = self
         
         let newItem = Item()
-        newItem.name = "Find Mike"
+        newItem.title = "Find Mike"
         
     }
     
@@ -41,7 +41,7 @@ extension ToDoListViewController: UITableViewDataSource {
         // create a constant item that refers to a cell
         let item = toDoCategory[indexPath.row]
         
-        cell.textLabel?.text = item.name
+        cell.textLabel?.text = item.title
         
         // Ternary operator
         // value = condition ? valueIfTrue : valueIfFalse
@@ -57,7 +57,7 @@ extension ToDoListViewController: UITableViewDataSource {
 extension ToDoListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(toDoCategory[indexPath.row].name)
+        print(toDoCategory[indexPath.row].title)
         
         // check if the Item's property "done" is false and if so set it to true, otherwise set it to false
         toDoCategory[indexPath.row].done = !toDoCategory[indexPath.row].done
@@ -81,7 +81,7 @@ extension ToDoListViewController: UITableViewDelegate {
             // what will happen once the user clicks the Add Item button on our UIAlert
             //append the text from teh textfield to the array of Items
             let newItemFromTheTextField = Item()
-            newItemFromTheTextField.name = textField.text!
+            newItemFromTheTextField.title = textField.text!
             self.toDoCategory.append(newItemFromTheTextField)
             // refresh the TableView
             self.toDoTableView.reloadData()

@@ -8,6 +8,6 @@
 import Foundation
 
 class Item {
-    var name: String = ""
+    var title: String = ""
     var done: Bool = false
 }
