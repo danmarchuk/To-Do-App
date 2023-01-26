@@ -13,13 +13,14 @@ class ToDoListViewController: UIViewController {
     
     var toDoCategory = [Item]()
     
+    // cast the App delegate an UIApplication object in order to be able to access it
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
         
-        let newItem = Item()
-        newItem.title = "Find Mike"
         
     }
     
@@ -72,19 +73,30 @@ extension ToDoListViewController: UITableViewDelegate {
     
     // MARK: - add new items
     
+    // Plus button pressed
     @IBAction func plusButtonPressed(_ sender: Any) {
         var textField = UITextField()
         
         // create an alert
-        let alert = UIAlertController(title: "Add new Item", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-            // what will happen once the user clicks the Add Item button on our UIAlert
-            //append the text from teh textfield to the array of Items
-            let newItemFromTheTextField = Item()
+        let alert = UIAlertController(title: "Add new Item", message: "",
+                                      preferredStyle: .alert)
+        
+        // create a button in the allert message called "Add Item"
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action)
+            in
+            // create a(n) (item) constant that will be placed in our database
+            let newItemFromTheTextField = Item(context: self.context)
+            
+            // put the text from the textfield into the constant
             newItemFromTheTextField.title = textField.text!
+            
+            // set the value of done to false
+            newItemFromTheTextField.done = false
+            
+            //append the constant to the array of Items
             self.toDoCategory.append(newItemFromTheTextField)
-            // refresh the TableView
-            self.toDoTableView.reloadData()
+            
+            self.saveItems()
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create a new item"
@@ -93,6 +105,18 @@ extension ToDoListViewController: UITableViewDelegate {
         
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+    }
+    
+    
+    func saveItems() {
+        do {
+            // save the context
+            try context.save()
+        } catch {
+            print("Error saving context \(error)")
+        }
+        // refresh the TableView
+        self.toDoTableView.reloadData()
     }
 }
 
