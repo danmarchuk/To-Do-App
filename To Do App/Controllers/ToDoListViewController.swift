@@ -59,7 +59,13 @@ extension ToDoListViewController: UITableViewDataSource {
 extension ToDoListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(itemArray[indexPath.row].title)
+        
+        // set the value of the title to completed (crUd -> Update data)
+        // itemArray[indexPath.row].setValue("Completed", forKey: "title")
+        
+        // delete an item (cruD -> Delete data)
+//        context.delete(itemArray[indexPath.row])
+//        itemArray.remove(at: indexPath.row)
         
         // check if the Item's property "done" is false and if so set it to true, otherwise set it to false
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
