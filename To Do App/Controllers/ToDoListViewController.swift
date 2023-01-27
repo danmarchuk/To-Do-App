@@ -118,6 +118,18 @@ extension ToDoListViewController: UITableViewDelegate {
         // refresh the TableView
         self.toDoTableView.reloadData()
     }
+    
+    func loadItems() {
+        // create a constant with a specified datatype <Item>
+        // we tap into our Item class/entity and make a new fetch request
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+            // put the items that we fetched from the context into an Array called itemArray
+             itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+    }
 }
 
 
