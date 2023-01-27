@@ -11,7 +11,7 @@ class ToDoListViewController: UIViewController {
     
     @IBOutlet weak var toDoTableView: UITableView!
     
-    var toDoCategory = [Item]()
+    var itemArray = [Item]()
     
     // cast the App delegate an UIApplication object in order to be able to access it
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -20,7 +20,7 @@ class ToDoListViewController: UIViewController {
         super.viewDidLoad()
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
-        
+        loadItems()
         
     }
     
@@ -32,7 +32,7 @@ extension ToDoListViewController: UITableViewDataSource {
     
     // how many cells we want to display
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return toDoCategory.count
+        return itemArray.count
     }
     
     // put content in the cells
@@ -40,7 +40,7 @@ extension ToDoListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath)
         
         // create a constant item that refers to a cell
-        let item = toDoCategory[indexPath.row]
+        let item = itemArray[indexPath.row]
         
         cell.textLabel?.text = item.title
         
@@ -58,10 +58,10 @@ extension ToDoListViewController: UITableViewDataSource {
 extension ToDoListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(toDoCategory[indexPath.row].title)
+        print(itemArray[indexPath.row].title)
         
         // check if the Item's property "done" is false and if so set it to true, otherwise set it to false
-        toDoCategory[indexPath.row].done = !toDoCategory[indexPath.row].done
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         self.toDoTableView.reloadData()
         
@@ -80,6 +80,7 @@ extension ToDoListViewController: UITableViewDelegate {
         // create an alert
         let alert = UIAlertController(title: "Add new Item", message: "",
                                       preferredStyle: .alert)
+        alert.becomeFirstResponder()
         
         // create a button in the allert message called "Add Item"
         let action = UIAlertAction(title: "Add Item", style: .default) { (action)
@@ -94,7 +95,7 @@ extension ToDoListViewController: UITableViewDelegate {
             newItemFromTheTextField.done = false
             
             //append the constant to the array of Items
-            self.toDoCategory.append(newItemFromTheTextField)
+            self.itemArray.append(newItemFromTheTextField)
             
             self.saveItems()
         }
