@@ -134,9 +134,54 @@ extension ToDoListViewController: UITableViewDelegate {
         self.toDoTableView.reloadData()
     }
     
-    func loadItems() {
-        // create a constant with a specified datatype <Item>
-        // we tap into our Item class/entity and make a new fetch request
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+        
+        let predicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedKategory!.name!)
+        
+        request.predicate = predicate
+        
+        do {
+            // put the items that we fetched from the context into an Array called itemArray
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+        if toDoTableView != nil {
+            toDoTableView.reloadData()}
+    }
+    
+    // function load items uses an optional that has a default value of nill
+    func loadItemsForASearchBar(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
+        
+        // create a predicate that matches the category
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedKategory!.name!)
+        
+        // if we have a predicate as an argument in the function then we use compound predicate
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+            // if we don't have the second argument use the value of the category
+        } else {
+            request.predicate = categoryPredicate
+        }
+        
+        do {
+            // put the items that we fetched from the context into an Array called itemArray
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+        if toDoTableView != nil {
+            toDoTableView.reloadData()}
+    }
+    
+    
+}
+
+// MARK: - Search Bar Delegate
+extension ToDoListViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         do {
             // put the items that we fetched from the context into an Array called itemArray
