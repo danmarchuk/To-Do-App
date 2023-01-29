@@ -47,6 +47,7 @@ extension ToDoListViewController: UITableViewDataSource {
         // create a constant item that refers to a cell
         let item = itemArray[indexPath.row]
         
+        // populate each cell with title of the item
         cell.textLabel?.text = item.title
         
         // Ternary operator
@@ -104,6 +105,8 @@ extension ToDoListViewController: UITableViewDelegate {
             
             // set the value of done to false
             newItemFromTheTextField.done = false
+            
+            newItemFromTheTextField.parentCategory = self.selectedKategory
             
             //append the constant to the array of Items
             self.itemArray.append(newItemFromTheTextField)
