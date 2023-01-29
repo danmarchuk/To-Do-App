@@ -21,7 +21,6 @@ class CategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         kategoryTableView.delegate = self
         kategoryTableView.dataSource = self
         loadCategories()

@@ -14,6 +14,12 @@ class ToDoListViewController: UIViewController {
     
     var itemArray = [Item]()
     
+    var selectedKategory : Kategory? {
+        didSet{
+            loadItems()
+        }
+    }
+    
     // cast the App delegate an UIApplication object in order to be able to access it
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -21,8 +27,6 @@ class ToDoListViewController: UIViewController {
         super.viewDidLoad()
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
-        loadItems()
-        
     }
     
     
@@ -49,7 +53,7 @@ extension ToDoListViewController: UITableViewDataSource {
         // value = condition ? valueIfTrue : valueIfFalse
         // Set the cell’s accessory type to .checkmark or .none depending if the item.done is true
         cell.accessoryType = item.done == true ? .checkmark : .none
-
+        
         return cell
     }
     
@@ -64,8 +68,8 @@ extension ToDoListViewController: UITableViewDelegate {
         // itemArray[indexPath.row].setValue("Completed", forKey: "title")
         
         // delete an item (cruD -> Delete data)
-//        context.delete(itemArray[indexPath.row])
-//        itemArray.remove(at: indexPath.row)
+        //        context.delete(itemArray[indexPath.row])
+        //        itemArray.remove(at: indexPath.row)
         
         // check if the Item's property "done" is false and if so set it to true, otherwise set it to false
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
@@ -139,5 +143,4 @@ extension ToDoListViewController: UITableViewDelegate {
         }
     }
 }
-
 
