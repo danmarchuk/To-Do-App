@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class Kategory: Object {
+class Category: Object {
     @objc dynamic var name: String = ""
     // create a forward relationship
     let items = List<Item>()

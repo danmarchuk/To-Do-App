@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class CategoryViewController: UIViewController {
 
@@ -14,14 +14,18 @@ class CategoryViewController: UIViewController {
 
     @IBOutlet weak var kategoryTableView: UITableView!
     
-    var kategoryArray = [Kategory]()
     
-    // cast the App delegate an UIApplication object in order to be able to access it
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let realm = try! Realm()
+    
+    
+    
+    // the Result is a Data Type that is auto updated
+    var categoryArray : Results<Category>?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        kategoryTableView.delegate = self
+//        kategoryTableView.delegate = self
         kategoryTableView.dataSource = self
         loadCategories()
     }
@@ -39,15 +43,13 @@ class CategoryViewController: UIViewController {
         let action = UIAlertAction(title: "Add Category", style: .default) { (action)
             in
             // create a (Kategory) constant that will be placed in our database
-            let newCategoryFromTheTextField = Kategory(context: self.context)
+            let newCategoryFromTheTextField = Category()
             
             // put the text from the textfield into the constant
             newCategoryFromTheTextField.name = textField.text!
             
-            //append the constant to the array of Kategories
-            self.kategoryArray.append(newCategoryFromTheTextField)
             
-            self.saveCategories()
+            self.save(category: newCategoryFromTheTextField)
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create a new Category"
@@ -58,10 +60,12 @@ class CategoryViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func saveCategories() {
+    func save(category: Category) {
         do {
             // save the context
-            try context.save()
+            try realm.write {
+                realm.add(category)
+            }
         } catch {
             print("Error saving context \(error)")
         }
@@ -69,16 +73,11 @@ class CategoryViewController: UIViewController {
         self.kategoryTableView.reloadData()
     }
     
-    func loadCategories(with request: NSFetchRequest<Kategory> = Kategory.fetchRequest()) {
-        // create a constant with a specified datatype <Item>
-        // we tap into our Item class/entity and make a new fetch request
-        //        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        do {
-            // put the items that we fetched from the context into an Array called itemArray
-            kategoryArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context \(error)")
-        }
+    func loadCategories() {
+        
+        // pull out all the items from realm that are Category objects
+        categoryArray = realm.objects(Category.self)
+        
         kategoryTableView.reloadData()
     }
     
@@ -87,16 +86,18 @@ class CategoryViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return kategoryArray.count
+        
+        // return the number of categories that we have if the categoryArray is not nil,
+        // if it is return 1 (nil Coalescing Operator)
+        return categoryArray?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        // create a constant item that refers to a cell
-        let category = kategoryArray[indexPath.row]
+        // put each categoryArray.name into each cell, if the value is nil put "No Categories added yet"
+        cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Categories added yet"
         
-        cell.textLabel?.text = category.name
         
         return cell
     }
@@ -105,16 +106,18 @@ extension CategoryViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension CategoryViewController: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToItems", sender: self)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! ToDoListViewController
         
+        
         if let indexPath = kategoryTableView.indexPathForSelectedRow {
-            destinationVC.selectedKategory = kategoryArray[indexPath.row]
+            // send the information about the selected category to the destinationVC (ToDoListViewControlelr)
+            destinationVC.selectedCategory = categoryArray?[indexPath.row]
         }
     }
 }

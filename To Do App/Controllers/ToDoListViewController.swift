@@ -6,22 +6,21 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class ToDoListViewController: UIViewController {
     
     @IBOutlet weak var toDoTableView: UITableView!
     
-    var itemArray = [Item]()
+    var toDoItems: Results<Item>?
+    let realm = try! Realm()
     
-    var selectedKategory : Kategory? {
+    var selectedCategory : Category? {
         didSet{
             loadItems()
         }
     }
     
-    // cast the App delegate an UIApplication object in order to be able to access it
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,24 +36,26 @@ extension ToDoListViewController: UITableViewDataSource {
     
     // how many cells we want to display
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        return toDoItems?.count ?? 1
     }
+    
     
     // put content in the cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath)
         
-        // create a constant item that refers to a cell
-        let item = itemArray[indexPath.row]
-        
-        // populate each cell with title of the item
-        cell.textLabel?.text = item.title
-        
-        // Ternary operator
-        // value = condition ? valueIfTrue : valueIfFalse
-        // Set the cell’s accessory type to .checkmark or .none depending if the item.done is true
-        cell.accessoryType = item.done == true ? .checkmark : .none
-        
+        if let item = toDoItems?[indexPath.row] {
+            // create a constant item that refers to a cell
+            cell.textLabel?.text = item.name ?? "No Item Loaded"
+            
+            
+            // Ternary operator
+            // value = condition ? valueIfTrue : valueIfFalse
+            // Set the cell’s accessory type to .checkmark or .none depending if the item.done is true
+            cell.accessoryType = item.done == true ? .checkmark : .none
+        } else {
+            cell.textLabel?.text = "No items Added"
+        }
         return cell
     }
     
@@ -66,14 +67,14 @@ extension ToDoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // set the value of the title to completed (crUd -> Update data)
-        // itemArray[indexPath.row].setValue("Completed", forKey: "title")
+        // toDoItems[indexPath.row].setValue("Completed", forKey: "title")
         
         // delete an item (cruD -> Delete data)
-        //        context.delete(itemArray[indexPath.row])
-        //        itemArray.remove(at: indexPath.row)
+        //        context.delete(toDoItems[indexPath.row])
+        //        toDoItems.remove(at: indexPath.row)
         
         // check if the Item's property "done" is false and if so set it to true, otherwise set it to false
-        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        toDoItems[indexPath.row].done = !toDoItems[indexPath.row].done
         
         self.toDoTableView.reloadData()
         
@@ -126,7 +127,6 @@ extension ToDoListViewController: UITableViewDelegate {
     func saveItems() {
         do {
             // save the context
-            try context.save()
         } catch {
             print("Error saving context \(error)")
         }
@@ -134,18 +134,19 @@ extension ToDoListViewController: UITableViewDelegate {
         self.toDoTableView.reloadData()
     }
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadItems() {
         
-        let predicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedKategory!.name!)
-        
-        request.predicate = predicate
-        
-        do {
-            // put the items that we fetched from the context into an Array called itemArray
-            itemArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context \(error)")
-        }
+        toDoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
+//        let predicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedKategory!.name!)
+//
+//        request.predicate = predicate
+//
+//        do {
+//            // put the items that we fetched from the context into an Array called toDoItems
+//            toDoItems = try context.fetch(request)
+//        } catch {
+//            print("Error fetching data from context \(error)")
+//        }
         if toDoTableView != nil {
             toDoTableView.reloadData()}
     }
@@ -165,7 +166,7 @@ extension ToDoListViewController: UITableViewDelegate {
         }
         
         do {
-            // put the items that we fetched from the context into an Array called itemArray
+            // put the items that we fetched from the context into an Array called toDoItems
             itemArray = try context.fetch(request)
         } catch {
             print("Error fetching data from context \(error)")
