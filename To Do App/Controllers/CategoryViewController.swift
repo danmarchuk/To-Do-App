@@ -14,10 +14,7 @@ class CategoryViewController: UIViewController {
 
     @IBOutlet weak var kategoryTableView: UITableView!
     
-    
     let realm = try! Realm()
-    
-    
     
     // the Result is a Data Type that is auto updated
     var categoryArray : Results<Category>?
@@ -25,7 +22,7 @@ class CategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        kategoryTableView.delegate = self
+        kategoryTableView.delegate = self
         kategoryTableView.dataSource = self
         loadCategories()
     }
@@ -97,7 +94,6 @@ extension CategoryViewController: UITableViewDataSource {
         
         // put each categoryArray.name into each cell, if the value is nil put "No Categories added yet"
         cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Categories added yet"
-        
         
         return cell
     }
