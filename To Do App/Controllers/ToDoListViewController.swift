@@ -26,6 +26,7 @@ class ToDoListViewController: UIViewController {
         super.viewDidLoad()
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
+        print(NSDate().timeIntervalSince1970)
     }
     
     
@@ -120,6 +121,9 @@ extension ToDoListViewController: UITableViewDelegate {
                         // put the text from the textfield into the constant
                         newItemFromTheTextField.name = textField.text!
                         
+                        // add the time when the item was added to the array
+                        newItemFromTheTextField.dateCreated = NSDate().timeIntervalSince1970
+                        
                         currentCategory.items.append(newItemFromTheTextField)
                         
                     }
@@ -192,31 +196,33 @@ extension ToDoListViewController: UITableViewDelegate {
 }
 
 // MARK: - Search Bar Delegate
-//extension ToDoListViewController: UISearchBarDelegate {
-//
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//
-//        let request: NSFetchRequest<Item> = Item.fetchRequest()
-//
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-//
-//        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
-//
-//        request.sortDescriptors = [sortDescriptor]
-//
-//        loadItemsForASearchBar(with: request, predicate: predicate)
-//
-//    }
+extension ToDoListViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        toDoItems = toDoItems?.filter("name CONTAINS[cd] %@", searchBar.text!)
+            .sorted(byKeyPath: "dateCreated", ascending: false)
+        //        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        //
+        //        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        //
+        //        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        //
+        //        request.sortDescriptors = [sortDescriptor]
+        //
+        //        loadItemsForASearchBar(with: request, predicate: predicate)
+        
+        toDoTableView.reloadData()
+    }
 
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count == 0 {
-//            loadItems()
-//            
-//            DispatchQueue.main.async {
-//                searchBar.resignFirstResponder()
-//            }
-//            
-//        }
-//    }
-//}
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+            
+        }
+    }
+}
 
