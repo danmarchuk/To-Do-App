@@ -43,7 +43,8 @@ extension ToDoListViewController: UITableViewDataSource {
     
     // put content in the cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) 
+        
         
         if let item = toDoItems?[indexPath.row] {
             

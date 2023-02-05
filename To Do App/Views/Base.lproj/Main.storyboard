@@ -116,7 +116,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="MVe-Uh-0E0">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="MVe-Uh-0E0" customClass="SwipeTableViewCell" customModule="SwipeCellKit">
                                         <rect key="frame" x="0.0" y="94" width="361" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MVe-Uh-0E0" id="c7e-v4-sfE">
@@ -154,7 +154,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="To Do App" id="yhF-0q-a1k"/>
                     <connections>
-                        <outlet property="kategoryTableView" destination="UXK-MR-wY3" id="Doj-s9-nYB"/>
+                        <outlet property="categoryTableView" destination="UXK-MR-wY3" id="Doj-s9-nYB"/>
                         <segue destination="nIZ-wQ-sHv" kind="show" identifier="goToItems" id="jbi-1D-3de"/>
                     </connections>
                 </viewController>
