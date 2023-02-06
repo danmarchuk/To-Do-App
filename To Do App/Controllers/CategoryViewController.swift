@@ -7,13 +7,8 @@
 
 import UIKit
 import RealmSwift
-import SwipeCellKit
 
-class CategoryViewController: UIViewController {
-
-    
-    
-    
+class CategoryViewController: SwipeTableViewController {
     
     @IBOutlet weak var categoryTableView: UITableView!
     
@@ -61,7 +56,7 @@ class CategoryViewController: UIViewController {
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
-    
+    // MARK: - Data manipulation
     func save(category: Category) {
         do {
             // save the context
@@ -82,42 +77,39 @@ class CategoryViewController: UIViewController {
         
         categoryTableView.reloadData()
     }
+    // MARK: - Delete Data From Swipe
+    override func updateModel(at indexPath: IndexPath) {
+        
+        if let category = self.categoryArray?[indexPath.row] {
+            do {
+                // delete the category
+                try self.realm.write {
+                    realm.delete(category)
+                    
+                }
+            } catch {
+                print("Error deleting caregory \(error)")
+            }
+        }
+    }
     
 }
 
 // MARK: - UITableViewDataSource
-extension CategoryViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension CategoryViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // return the number of categories that we have if the categoryArray is not nil,
         // if it is return 1 (nil Coalescing Operator)
         return categoryArray?.count ?? 1
     }
     
-    //    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    //        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! SwipeTableViewCell
-    //        cell.delegate = self
-    //        return cell
-    //    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! SwipeTableViewCell
-        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         // put each categoryArray.name into each cell, if the value is nil put "No Categories added yet"
         cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Categories added yet"
-        
-        
-//        cell.layer.cornerRadius = 20
-//        cell.layer.shadowOffset = CGSize(width: 0, height: 3)
-//        cell.layer.shadowRadius = 3
-//        cell.layer.shadowOpacity = 0.3
-//        cell.layer.shouldRasterize = true
-//        cell.layer.rasterizationScale = UIScreen.main.scale
-
-        
-        cell.delegate = self
         
         return cell
     }
@@ -142,37 +134,6 @@ extension CategoryViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - SwipeTableViewCellDelegate
-extension CategoryViewController: SwipeTableViewCellDelegate {
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-        guard orientation == .right else { return nil }
 
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { [self] action, indexPath in
-            if let category = self.categoryArray?[indexPath.row] {
-                do {
-                    // delete the category
-                    try self.realm.write {
-                        realm.delete(category)
-                        
-                    }
-                } catch {
-                    print("Error deleting caregory \(error)")
-                }
-//                categoryTableView.reloadData()
-            }
-        }
-        // customize the action appearance
-        deleteAction.image = UIImage(named: "delete-icon")
-        return [deleteAction]
-    }
-    
-    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-        var options = SwipeOptions()
-        options.expansionStyle = .destructiveAfterFill
-        return options
-    }
-
-}
 
 
