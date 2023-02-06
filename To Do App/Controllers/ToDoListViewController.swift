@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class ToDoListViewController: UIViewController {
+class ToDoListViewController: SwipeTableViewController {
     
     @IBOutlet weak var toDoTableView: UITableView!
     
@@ -21,29 +21,43 @@ class ToDoListViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
-        print(NSDate().timeIntervalSince1970)
+        toDoTableView.rowHeight = 60.0
     }
-    
+    // MARK: - Delete Data From Swipe
+    override func updateModel(at indexPath: IndexPath) {
+        
+        if let item = self.toDoItems?[indexPath.row] {
+            do {
+                // delete the category
+                try self.realm.write {
+                    realm.delete(item)
+                    
+                }
+            } catch {
+                print("Error deleting item \(error)")
+            }
+        }
+    }
     
 }
 
 // MARK: - TableView DataSource methods
-extension ToDoListViewController: UITableViewDataSource {
+extension ToDoListViewController {
     
     // how many cells we want to display
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return toDoItems?.count ?? 1
     }
     
     
     // put content in the cells
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         
         if let item = toDoItems?[indexPath.row] {
@@ -60,6 +74,8 @@ extension ToDoListViewController: UITableViewDataSource {
         }
         return cell
     }
+    
+
     
 }
 // MARK: - TableView Delegate protocols
@@ -168,6 +184,10 @@ extension ToDoListViewController: UITableViewDelegate {
         if toDoTableView != nil {
             toDoTableView.reloadData()}
     }
+    
+
+    
+    
     
     // function load items uses an optional that has a default value of nill
     //    func loadItemsForASearchBar(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
