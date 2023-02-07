@@ -187,33 +187,6 @@ extension ToDoListViewController: UITableViewDelegate {
     
 
     
-    
-    
-    // function load items uses an optional that has a default value of nill
-    //    func loadItemsForASearchBar(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
-    //
-    //        // create a predicate that matches the category
-    //        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedKategory!.name!)
-    //
-    //        // if we have a predicate as an argument in the function then we use compound predicate
-    //        if let additionalPredicate = predicate {
-    //            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
-    //            // if we don't have the second argument use the value of the category
-    //        } else {
-    //            request.predicate = categoryPredicate
-    //        }
-    //
-    //        do {
-    //            // put the items that we fetched from the context into an Array called toDoItems
-    //            itemArray = try context.fetch(request)
-    //        } catch {
-    //            print("Error fetching data from context \(error)")
-    //        }
-    //        if toDoTableView != nil {
-    //            toDoTableView.reloadData()}
-    //    }
-    
-    
 }
 
 // MARK: - Search Bar Delegate
