@@ -23,7 +23,7 @@ class CategoryViewController: SwipeTableViewController {
         super.viewDidLoad()
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
-        categoryTableView.rowHeight = 80.0
+//        categoryTableView.rowHeight = 80.0
         loadCategories()
         
     }
@@ -46,11 +46,13 @@ class CategoryViewController: SwipeTableViewController {
             // put the text from the textfield into the constant
             newCategoryFromTheTextField.name = textField.text!
             
+            newCategoryFromTheTextField.color = UIColor.randomFlat().hexValue()
             
             self.save(category: newCategoryFromTheTextField)
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create a new Category"
+            alertTextField.becomeFirstResponder()
             textField = alertTextField
         }
         
@@ -112,8 +114,18 @@ extension CategoryViewController {
         // put each categoryArray.name into each cell, if the value is nil put "No Categories added yet"
         cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Categories added yet"
         
-        cell.backgroundColor = UIColor.randomFlat()
+//        cell.backgroundColor = UIColor.white
+                cell.layer.borderColor = UIColor.black.cgColor
+                cell.layer.borderWidth = 1
+                cell.layer.cornerRadius = 8
+                cell.clipsToBounds = true
         
+        let randomColor = UIColor.randomFlat().hexValue()
+        
+        if let colorString = UIColor(hexString: categoryArray?[indexPath.row].color ?? randomColor) {
+            
+            cell.backgroundColor = colorString
+        }
         return cell
     }
 }
