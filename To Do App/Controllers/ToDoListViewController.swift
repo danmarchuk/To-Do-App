@@ -12,6 +12,8 @@ class ToDoListViewController: SwipeTableViewController {
     
     @IBOutlet weak var toDoTableView: UITableView!
     
+    @IBOutlet weak var toDoSearchbar: UISearchBar!
+    
     var toDoItems: Results<Item>?
     let realm = try! Realm()
     
@@ -26,6 +28,8 @@ class ToDoListViewController: SwipeTableViewController {
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
         toDoTableView.rowHeight = 60.0
+        toDoSearchbar.barTintColor = UIColor(hexString: selectedCategory!.color)
+        toDoSearchbar.searchTextField.backgroundColor = .white
     }
     // MARK: - Delete Data From Swipe
     override func updateModel(at indexPath: IndexPath) {
