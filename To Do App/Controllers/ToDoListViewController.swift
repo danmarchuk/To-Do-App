@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class ToDoListViewController: SwipeTableViewController {
     
@@ -67,6 +68,17 @@ extension ToDoListViewController {
         if let item = toDoItems?[indexPath.row] {
             
             cell.textLabel?.text = item.name
+            
+            let percentage = CGFloat(indexPath.row) / CGFloat(toDoItems!.count)
+            
+            let colorFromCategory = UIColor(hexString: selectedCategory!.color)
+            
+            if let color = colorFromCategory!.darken(byPercentage: percentage) {
+                cell.backgroundColor = color
+                cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
+            }
+            
+
             
             // Ternary operator
             // value = condition ? valueIfTrue : valueIfFalse
@@ -174,7 +186,7 @@ extension ToDoListViewController: UITableViewDelegate {
     
     func loadItems() {
         
-        toDoItems = selectedCategory?.items.sorted(byKeyPath: "name", ascending: true)
+        toDoItems = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: true)
         //        let predicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedKategory!.name!)
         //
         //        request.predicate = predicate
