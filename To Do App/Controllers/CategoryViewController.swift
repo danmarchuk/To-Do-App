@@ -11,7 +11,6 @@ import ChameleonFramework
 
 class CategoryViewController: SwipeTableViewController {
     
-    @IBOutlet weak var categorySearchBar: UISearchBar!
     @IBOutlet weak var categoryTableView: UITableView!
     
     let realm = try! Realm()
@@ -26,8 +25,6 @@ class CategoryViewController: SwipeTableViewController {
         categoryTableView.dataSource = self
         categoryTableView.rowHeight = 80.0
         loadCategories()
-        categorySearchBar.barTintColor = UIColor.randomFlat()
-        categorySearchBar.searchTextField.backgroundColor = .white
     }
     
     
