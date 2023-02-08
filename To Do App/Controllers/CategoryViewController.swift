@@ -11,6 +11,7 @@ import ChameleonFramework
 
 class CategoryViewController: SwipeTableViewController {
     
+    @IBOutlet weak var categorySearchBar: UISearchBar!
     @IBOutlet weak var categoryTableView: UITableView!
     
     let realm = try! Realm()
@@ -25,7 +26,8 @@ class CategoryViewController: SwipeTableViewController {
         categoryTableView.dataSource = self
         categoryTableView.rowHeight = 80.0
         loadCategories()
-        
+        categorySearchBar.barTintColor = UIColor.randomFlat()
+        categorySearchBar.searchTextField.backgroundColor = .white
     }
     
     
@@ -113,12 +115,6 @@ extension CategoryViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         // put each categoryArray.name into each cell, if the value is nil put "No Categories added yet"
         cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Categories added yet"
-        
-//        cell.backgroundColor = UIColor.white
-                cell.layer.borderColor = UIColor.black.cgColor
-                cell.layer.borderWidth = 1
-                cell.layer.cornerRadius = 8
-                cell.clipsToBounds = true
         
         let randomColor = UIColor.randomFlat().hexValue()
         
