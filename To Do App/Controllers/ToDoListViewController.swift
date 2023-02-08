@@ -186,7 +186,7 @@ extension ToDoListViewController: UITableViewDelegate {
     
     func loadItems() {
         
-        toDoItems = selectedCategory?.items.sorted(byKeyPath: "name", ascending: true)
+        toDoItems = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: true)
         //        let predicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedKategory!.name!)
         //
         //        request.predicate = predicate
