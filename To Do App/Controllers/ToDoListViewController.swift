@@ -29,8 +29,26 @@ class ToDoListViewController: SwipeTableViewController {
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
         toDoTableView.rowHeight = 60.0
+        
+        // configure the searchbar colors
         toDoSearchbar.barTintColor = UIColor(hexString: selectedCategory!.color)
         toDoSearchbar.searchTextField.backgroundColor = .white
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // color of the navBar
+        if let colorHex = selectedCategory?.color {
+            guard let navBar = navigationController?.navigationBar else {fatalError("Navigation Controller does not exist")}
+            let appearance = UINavigationBarAppearance()
+            appearance.backgroundColor = UIColor(hexString: colorHex)
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navigationController?.navigationBar.tintColor = .white
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.compactAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
+
     }
     // MARK: - Delete Data From Swipe
     override func updateModel(at indexPath: IndexPath) {

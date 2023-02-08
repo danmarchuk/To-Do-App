@@ -27,6 +27,19 @@ class CategoryViewController: SwipeTableViewController {
         loadCategories()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // color of the navBar
+            let appearance = UINavigationBarAppearance()
+            appearance.backgroundColor = UIColor.systemMint
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navigationController?.navigationBar.tintColor = .white
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.compactAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+
+    
     
     // when the add button is pressed we can add a Kategory to the array of Kategories
     @IBAction func addButtonPressed(_ sender: Any) {
