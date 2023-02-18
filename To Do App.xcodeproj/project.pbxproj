@@ -21,6 +21,7 @@
 		936501AD297C57BC0077CAC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 936501AC297C57BC0077CAC7 /* Assets.xcassets */; };
 		936501B0297C57BC0077CAC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 936501AE297C57BC0077CAC7 /* LaunchScreen.storyboard */; };
 		9379730229A113BF00FE59AF /* demo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9379730129A113BF00FE59AF /* demo.gif */; };
+		9379730429A1147F00FE59AF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9379730329A1147F00FE59AF /* README.md */; };
 		93A4A4D3298FFEE300A34C24 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A4A4D2298FFEE300A34C24 /* SwipeTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		936501AF297C57BC0077CAC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		936501B1297C57BC0077CAC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9379730129A113BF00FE59AF /* demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = demo.gif; sourceTree = "<group>"; };
+		9379730329A1147F00FE59AF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		93A4A4D2298FFEE300A34C24 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 		CE8701F9351DC11E4479D662 /* Pods-To Do App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-To Do App.debug.xcconfig"; path = "Target Support Files/Pods-To Do App/Pods-To Do App.debug.xcconfig"; sourceTree = "<group>"; };
 		F32B28FB9E3C3B67A1D60B4A /* Pods_To_Do_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_To_Do_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +72,7 @@
 		93650197297C57BA0077CAC7 = {
 			isa = PBXGroup;
 			children = (
+				9379730329A1147F00FE59AF /* README.md */,
 				9379730029A113BF00FE59AF /* Images */,
 				936501A2297C57BA0077CAC7 /* To Do App */,
 				936501A1297C57BA0077CAC7 /* Products */,
@@ -223,6 +226,7 @@
 			files = (
 				936501B0297C57BC0077CAC7 /* LaunchScreen.storyboard in Resources */,
 				9379730229A113BF00FE59AF /* demo.gif in Resources */,
+				9379730429A1147F00FE59AF /* README.md in Resources */,
 				936501AD297C57BC0077CAC7 /* Assets.xcassets in Resources */,
 				936501AB297C57BA0077CAC7 /* Main.storyboard in Resources */,
 			);
