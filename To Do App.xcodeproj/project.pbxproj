@@ -20,6 +20,7 @@
 		936501AB297C57BA0077CAC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 936501A9297C57BA0077CAC7 /* Main.storyboard */; };
 		936501AD297C57BC0077CAC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 936501AC297C57BC0077CAC7 /* Assets.xcassets */; };
 		936501B0297C57BC0077CAC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 936501AE297C57BC0077CAC7 /* LaunchScreen.storyboard */; };
+		9379730229A113BF00FE59AF /* demo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9379730129A113BF00FE59AF /* demo.gif */; };
 		93A4A4D3298FFEE300A34C24 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A4A4D2298FFEE300A34C24 /* SwipeTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		936501AC297C57BC0077CAC7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		936501AF297C57BC0077CAC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		936501B1297C57BC0077CAC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9379730129A113BF00FE59AF /* demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = demo.gif; sourceTree = "<group>"; };
 		93A4A4D2298FFEE300A34C24 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 		CE8701F9351DC11E4479D662 /* Pods-To Do App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-To Do App.debug.xcconfig"; path = "Target Support Files/Pods-To Do App/Pods-To Do App.debug.xcconfig"; sourceTree = "<group>"; };
 		F32B28FB9E3C3B67A1D60B4A /* Pods_To_Do_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_To_Do_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,13 +64,13 @@
 				CE8701F9351DC11E4479D662 /* Pods-To Do App.debug.xcconfig */,
 				0F073D0D649AFCBDCBB7AFAE /* Pods-To Do App.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		93650197297C57BA0077CAC7 = {
 			isa = PBXGroup;
 			children = (
+				9379730029A113BF00FE59AF /* Images */,
 				936501A2297C57BA0077CAC7 /* To Do App */,
 				936501A1297C57BA0077CAC7 /* Products */,
 				4A97623ABD5F7E513DBA4FA5 /* Pods */,
@@ -134,6 +136,14 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9379730029A113BF00FE59AF /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9379730129A113BF00FE59AF /* demo.gif */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		EF30E5112140DC424461E46E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,7 +204,7 @@
 			);
 			mainGroup = 93650197297C57BA0077CAC7;
 			packageReferences = (
-				93139E8A2986C7520072F6FC /* XCRemoteSwiftPackageReference "realm-swift.git" */,
+				93139E8A2986C7520072F6FC /* XCRemoteSwiftPackageReference "realm-swift" */,
 				933EA613298ED45000C37CC6 /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
 			);
 			productRefGroup = 936501A1297C57BA0077CAC7 /* Products */;
@@ -212,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				936501B0297C57BC0077CAC7 /* LaunchScreen.storyboard in Resources */,
+				9379730229A113BF00FE59AF /* demo.gif in Resources */,
 				936501AD297C57BC0077CAC7 /* Assets.xcassets in Resources */,
 				936501AB297C57BA0077CAC7 /* Main.storyboard in Resources */,
 			);
@@ -494,7 +505,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		93139E8A2986C7520072F6FC /* XCRemoteSwiftPackageReference "realm-swift.git" */ = {
+		93139E8A2986C7520072F6FC /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
@@ -515,12 +526,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		93139E8B2986C7520072F6FC /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 93139E8A2986C7520072F6FC /* XCRemoteSwiftPackageReference "realm-swift.git" */;
+			package = 93139E8A2986C7520072F6FC /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = Realm;
 		};
 		93139E8D2986C7520072F6FC /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 93139E8A2986C7520072F6FC /* XCRemoteSwiftPackageReference "realm-swift.git" */;
+			package = 93139E8A2986C7520072F6FC /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
 		933EA614298ED45000C37CC6 /* SwipeCellKit */ = {
