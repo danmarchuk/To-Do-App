@@ -3,9 +3,9 @@ App that helps keeping track of things we need to do. The user can add or delete
 Technologies used: 
 Realm, Cocoapods, SwipeCellKit, ChameleonFramework
 -----------------------------------------------------
+<p float="left">
 <img src="Images/1.png"  width="189" height="409"> 
 <img src="Images/2.png"  width="189" height="409"> 
 <img src="Images/demo.gif"  width="189" height="409"> 
-
-
+</p>
 
